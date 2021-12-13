@@ -38,8 +38,6 @@ int main() {
 
 	std::ofstream oF;
 
-
-
 	mosqpp::lib_init();
 
 	iot_client = new mqtt_client(client_id, host, port, outFilePath);
@@ -56,6 +54,8 @@ int main() {
 
 	while (iot_client->getY() != 1) {
 
+		delay(50000);
+
 		std::time_t t = std::time(nullptr);
 		std::tm tm = *std::localtime(&t);
 		min = tm.tm_min;
@@ -67,10 +67,10 @@ int main() {
 			oF.close();
 
 		}
-		
-		delay(50000);
 
 	};
+
+	std::cout << longtime() << " -- Application closing... Bye!" << std::endl;
 
 	mosqpp::lib_cleanup();
 

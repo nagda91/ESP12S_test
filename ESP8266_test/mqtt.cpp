@@ -17,6 +17,7 @@ mqtt_client::mqtt_client(const char *id, const char *host, int port, string file
 {
 	int ret = connect(host, port, DEFAULT_KEEP_ALIVE);
 	if (ret == 0) {
+		cout << longtime() << endl;
 		cout << "Connected" << endl;
 	}
 	else {
@@ -152,7 +153,7 @@ void mqtt_client::on_message(const struct mosquitto_message* message)
 	ofstream of;
 
 	of.open(outFilePath.c_str(), ios_base::app);
-	of << longtime() << " -- " << pyl << endl;
+	of << longtime() << " -- " << message->topic << " - " << pyl << endl;
 
 	of.close();
 
