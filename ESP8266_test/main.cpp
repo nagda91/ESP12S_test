@@ -33,7 +33,7 @@ int main() {
 	int port = MQTT_PORT;
 	// MQTT
 
-	std::string outFilePath = "/home/pi/Desktop/esp8226_test/esp8226_log.txt";
+	std::string outFilePath = "/home/pi/Desktop/esp8226_test/esp8266_log.txt";
 	int min;
 
 	std::ofstream oF;

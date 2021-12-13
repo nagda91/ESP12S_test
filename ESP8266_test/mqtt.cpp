@@ -25,6 +25,8 @@ mqtt_client::mqtt_client(const char *id, const char *host, int port, string file
 
 	outFilePath = filePath;
 
+	y = 0;
+
 }
 
 mqtt_client::~mqtt_client()
@@ -56,7 +58,7 @@ void mqtt_client::on_subscribe(int mid, int qos_count, const int *granted_qos)
 void mqtt_client::on_disconnect(int rc)
 {
 	Connected = false;
-	cout << "disconnected" << endl;
+	cout << longtime() << "Disconnected" << endl;
 	this->reconnect();
 	
 }
@@ -80,11 +82,11 @@ int mqtt_client::cmd(string mes)
 		setX(szam(mes.substr(mes.find("=")+1)));
 		cout << "cmd(), X= " << getX() << endl;
 		return 0;
-	}
-	else if (mes.find("y") != npos) {
-		setY(szam(mes.substr(mes.find("=") + 1)));
-		cout << "cmd(), Y= " << getY() << endl;
-		return 0;
+	//}
+	//else if (mes.find("y") != npos) {
+	//	setY(szam(mes.substr(mes.find("=") + 1)));
+	//	cout << "cmd(), Y= " << getY() << endl;
+	//	return 0;
 	}else if (mes.find("z") != npos) {
 		setZ(szam(mes.substr(mes.find("=") + 1)));
 		cout << "cmd(), Z= " << getZ() << endl;
@@ -144,6 +146,9 @@ int mqtt_client::send(string topic, string newPl)
 void mqtt_client::on_message(const struct mosquitto_message* message)
 {	
 	string pyl = (char*)message->payload;
+
+	if (pyl == "1") y = 1;
+
 	ofstream of;
 
 	of.open(outFilePath.c_str(), ios_base::app);
@@ -160,7 +165,7 @@ void mqtt_client::reconnect() {
 	int x = this->connect(BROKER_ADDRESS, MQTT_PORT, DEFAULT_KEEP_ALIVE);
 	int y = this->subscribe(i, MQTT_TOPIC, 0);
 
-	if (x == 0 && y == 0) cout << "reconnected" << endl;
+	if (x == 0 && y == 0) cout << longtime() << "Reconnected" << endl;
 	else {
 		//cout << "x: " << to_string(x) << ", y: " << to_string(y) << endl;
 	}
