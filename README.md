@@ -1,6 +1,6 @@
 # ESP8266_test
 
-Goal: pinging a Feather Huzzah to repsond, test WI-Fi connection stability
+Goal: pinging a Feather Huzzah ESP8266 to repsond, test WI-Fi connection stability
 
 Environment: Raspbian linux (some old one from 2018)
 
